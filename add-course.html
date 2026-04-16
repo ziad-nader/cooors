@@ -1,42 +1,62 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="style.css">
     <title>إضافة كورس</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <header>
-        <div>Course Organizer</div>
+        <div class="logo">course<span>organizer</span></div>
         <nav>
-            <a href="index.html">الرئيسية</a>
-            <a href="courses.html">جدول الكورسات</a>
+            <ul>
+                <li><a href="index.html">الرئيسية</a></li>
+                <li><a href="courses.html">كورساتي</a></li>
+                <li><a href="add-course.html">إضافة كورس</a></li>
+            </ul>
         </nav>
     </header>
-    <div class="container">
-        <h2>أضف كورس جديد</h2>
-        <input type="text" id="name" placeholder="اسم الكورس">
-        <input type="number" id="hours" placeholder="عدد الساعات">
-        <input type="text" id="instructor" placeholder="اسم المحاضر">
-        <button onclick="saveCourse()">حفظ الكورس ✅</button>
-    </div>
+
+    <main>
+        <form id="courseForm">
+            <h2>إضافة كورس جديد</h2>
+            <input type="text" id="name" placeholder="اسم الكورس" required>
+            <input type="number" id="hours" placeholder="الساعات" required>
+            <input type="text" id="inst" placeholder="المحاضر">
+            <textarea id="notes" placeholder="الملاحظات"></textarea>
+            <button type="button" onclick="saveData()">حفظ الكورس</button>
+        </form>
+    </main>
 
     <script>
-        function saveCourse() {
-            const name = document.getElementById('name').value;
-            const hours = document.getElementById('hours').value;
-            const inst = document.getElementById('instructor').value;
+        function saveData() {
+            const n = document.getElementById('name').value;
+            const h = document.getElementById('hours').value;
+            const i = document.getElementById('inst').value;
+            const o = document.getElementById('notes').value;
 
-            if(!name || !hours) { alert("املى البيانات يا زياد!"); return; }
+            if(!n || !h) {
+                alert("اكتب الاسم والساعات");
+                return;
+            }
 
-            let list = JSON.parse(localStorage.getItem('coursesData') || '[]');
-            list.push({ name, hours, inst });
-            localStorage.setItem('coursesData', JSON.stringify(list));
+            // سحب البيانات القديمة بصيغة صحيحة
+            let data = [];
+            try {
+                data = JSON.parse(localStorage.getItem('myCourses')) || [];
+            } catch(e) {
+                data = [];
+            }
 
-            alert("تم الحفظ بنجاح! هوديك للجدول دلوقتي.");
+            // إضافة الكورس الجديد
+            data.push({ name: n, hours: h, instructor: i, notes: o });
+            
+            // الحفظ
+            localStorage.setItem('myCourses', JSON.stringify(data));
+
+            // التحويل للجدول
             window.location.href = 'courses.html';
         }
     </script>
 </body>
-</html>
 </html>

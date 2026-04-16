@@ -1,45 +1,54 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="style.css">
     <title>جدول الكورسات</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <header>
-        <div>Course Organizer</div>
-        <nav>
-            <a href="index.html">الرئيسية</a>
-            <a href="add-course.html">إضافة كورس</a>
-        </nav>
+        <div class="logo">course<span>organizer</span></div>
     </header>
-    <div class="container">
-        <h2>الكورسات المسجلة</h2>
-        <table>
+
+    <main>
+        <h2>كورساتي</h2>
+        <table border="1" style="width:100%; text-align:center;">
             <thead>
                 <tr>
                     <th>الكورس</th>
                     <th>الساعات</th>
                     <th>المحاضر</th>
+                    <th>ملاحظات</th>
                 </tr>
             </thead>
             <tbody id="tableBody"></tbody>
         </table>
-        <br>
-        <button onclick="localStorage.clear(); location.reload();" style="background:#c0392b">مسح كل البيانات</button>
-    </div>
+    </main>
 
     <script>
         window.onload = function() {
-            const tableBody = document.getElementById('tableBody');
-            const data = JSON.parse(localStorage.getItem('coursesData') || '[]');
+            const body = document.getElementById('tableBody');
+            let courses = [];
             
-            if(data.length === 0) {
-                tableBody.innerHTML = '<tr><td colspan="3">لا توجد كورسات.. ضيف كورس الأول</td></tr>';
+            try {
+                courses = JSON.parse(localStorage.getItem('myCourses')) || [];
+            } catch(e) {
+                courses = [];
+            }
+
+            if(courses.length === 0) {
+                body.innerHTML = '<tr><td colspan="4">لا توجد بيانات</td></tr>';
             } else {
-                data.forEach(item => {
-                    tableBody.innerHTML += <tr><td>${item.name}</td><td>${item.hours}</td><td>${item.inst}</td></tr>;
+                let rows = '';
+                courses.forEach(function(item) {
+                    rows += '<tr>' +
+                        '<td>' + item.name + '</td>' +
+                        '<td>' + item.hours + '</td>' +
+                        '<td>' + (item.instructor || '-') + '</td>' +
+                        '<td>' + (item.notes || '-') + '</td>' +
+                    '</tr>';
                 });
+                body.innerHTML = rows;
             }
         };
     </script>
