@@ -2,52 +2,50 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>إضافة كورس جديد</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header>
+    <header style="background:#2c3e50; padding:15px; display:flex; justify-content:space-between; color:white;">
         <div class="logo">course<span>organizer</span></div>
         <nav>
-            <ul>
-                <li><a href="index.html">الرئيسية</a></li>
-                <li><a href="courses.html">جدول الكورسات</a></li>
-                <li><a href="add-course.html">إضافة كورس</a></li>
-            </ul>
+            <a href="index.html" style="color:white; margin-left:15px; text-decoration:none;">الرئيسية</a>
+            <a href="courses.html" style="color:white; text-decoration:none;">جدول الكورسات</a>
         </nav>
     </header>
 
-    <main>
-        <div class="form-container">
-            <h2>إضافة كورس جديد</h2>
-            <form id="courseForm">
-                <input type="text" id="cName" placeholder="اسم الكورس" required>
-                <input type="number" id="cHours" placeholder="عدد الساعات" required>
-                <input type="text" id="cInst" placeholder="اسم المحاضر">
-                <textarea id="cNote" placeholder="ملاحظات إضافية"></textarea>
-                <button type="button" onclick="saveData()">حفظ البيانات</button>
-            </form>
+    <main style="padding:40px; text-align:center;">
+        <div style="background:white; padding:20px; border-radius:10px; box-shadow:0 0 10px rgba(0,0,0,0.1); display:inline-block; width:300px;">
+            <h2>إضافة كورس</h2>
+            <input type="text" id="cName" placeholder="اسم الكورس" style="width:100%; margin:10px 0; padding:10px;">
+            <input type="number" id="cHours" placeholder="عدد الساعات" style="width:100%; margin:10px 0; padding:10px;">
+            <input type="text" id="cInst" placeholder="المحاضر" style="width:100%; margin:10px 0; padding:10px;">
+            <button onclick="saveMyData()" style="width:100%; padding:10px; background:#2c3e50; color:white; border:none; cursor:pointer;">حفظ</button>
         </div>
     </main>
 
     <script>
-        function saveData() {
+        function saveMyData() {
             const name = document.getElementById('cName').value;
             const hours = document.getElementById('cHours').value;
             const inst = document.getElementById('cInst').value;
-            const note = document.getElementById('cNote').value;
 
-            if(!name || !hours) {
-                alert("برجاء إدخال اسم الكورس وعدد الساعات");
+            if(name == "" || hours == "") {
+                alert("اكتب الاسم والساعات الأول يا بطل!");
                 return;
             }
 
-            const courses = JSON.parse(localStorage.getItem('myCourses') || '[]');
-            courses.push({ name, hours, instructor: inst, notes: note });
+            // بنجيب اللي متسيف قبل كدة
+            let courses = JSON.parse(localStorage.getItem('myCourses') || '[]');
+            
+            // بنضيف الكورس الجديد
+            courses.push({ name: name, hours: hours, instructor: inst });
+            
+            // بنسيفهم تاني
             localStorage.setItem('myCourses', JSON.stringify(courses));
 
-            window.location.href = 'courses.html';
+            alert("تم الحفظ بنجاح!");
+            window.location.href = 'courses.html'; // هيحولك للجدول فوراً
         }
     </script>
 </body>

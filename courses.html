@@ -2,66 +2,51 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>جدول الكورسات</title>
+    <title>كورساتي</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header>
-        <div class="logo">course<span>organizer</span></div>
+    <header style="background:#2c3e50; padding:20px; display:flex; justify-content:space-between; color:white;">
+        <div>course<span>organizer</span></div>
         <nav>
-            <ul>
-                <li><a href="index.html">الرئيسية</a></li>
-                <li><a href="courses.html">جدول الكورسات</a></li>
-                <li><a href="add-course.html">إضافة كورس</a></li>
-            </ul>
+            <a href="index.html" style="color:white; margin-left:15px; text-decoration:none;">الرئيسية</a>
+            <a href="add-course.html" style="color:white; text-decoration:none;">إضافة كورس</a>
         </nav>
     </header>
 
-    <main>
-        <div class="table-container">
-            <h2>كورساتي المسجلة</h2>
-            <table border="1" style="width:100%; border-collapse: collapse;">
-                <thead>
-                    <tr style="background: #2c3e50; color: white;">
-                        <th>الكورس</th>
-                        <th>الساعات</th>
-                        <th>المحاضر</th>
-                        <th>ملاحظات</th>
-                    </tr>
-                </thead>
-                <tbody id="tableBody">
-                    </tbody>
-            </table>
-        </div>
+    <main style="padding:20px; text-align:center;">
+        <h2>الجدول</h2>
+        <table border="1" style="width:100%; margin-top:20px; border-collapse:collapse;">
+            <thead>
+                <tr style="background:#eee;">
+                    <th>الاسم</th>
+                    <th>الساعات</th>
+                    <th>المحاضر</th>
+                    <th>ملاحظات</th>
+                </tr>
+            </thead>
+            <tbody id="tableBody"></tbody>
+        </table>
     </main>
 
     <script>
-        function loadData() {
-            const tableBody = document.getElementById('tableBody');
-            // بنجيب البيانات وبنتأكد إنها موجودة فعلاً
-            const rawData = localStorage.getItem('myCourses');
-            const courses = JSON.parse(rawData || '[]');
-
-            tableBody.innerHTML = ''; 
-
-            if (courses.length === 0) {
-                tableBody.innerHTML = '<tr><td colspan="4" style="padding:20px;">مفيش بيانات لسه.. ضيف كورس من صفحة الإضافة</td></tr>';
+        window.onload = function() {
+            const body = document.getElementById('tableBody');
+            const data = JSON.parse(localStorage.getItem('myCourses') || '[]');
+            
+            if(data.length === 0) {
+                body.innerHTML = '<tr><td colspan="4">مفيش داتا.. روح لصفحة "إضافة كورس" وضيف واحد جديد</td></tr>';
             } else {
-                courses.forEach(course => {
-                    const row = <tr>
-                        <td>${course.name}</td>
-                        <td>${course.hours}</td>
-                        <td>${course.instructor || '-'}</td>
-                        <td>${course.notes || '-'}</td>
+                data.forEach(item => {
+                    body.innerHTML += <tr>
+                        <td>${item.name}</td>
+                        <td>${item.hours}</td>
+                        <td>${item.instructor || '-'}</td>
+                        <td>${item.notes || '-'}</td>
                     </tr>;
-                    tableBody.innerHTML += row;
                 });
             }
-        }
-
-        // تشغيل الكود بمجرد ما الصفحة تفتح
-        window.onload = loadData;
+        };
     </script>
 </body>
 </html>
