@@ -10,38 +10,12 @@ body {
     direction: ltr;
     text-align: center;
 }
-
-header {
-    background-color: #2c3e50;
-    color: white;
-    padding: 15px 5%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-nav {
-    display: flex;
-    flex-direction: row;
-    gap: 15px;
-    list-style: none;
-}
-
-nav a {
-    color: white;
-    text-decoration: none;
-    font-size: 14px;
-    border: 1px solid rgba(255,255,255,0.4);
-    padding: 8px 15px;
-    border-radius: 5px;
-    transition: 0.3s;
-}
-
-nav a:hover {
-    background: white;
-    color: #2c3e50;
-}
-
+<nav>
+    <a href="index.html">Home</a>
+    <a href="courses.html">Courses</a>
+    <a href="add-course.html">Add</a>
+    <a href="about.html">About</a>
+</nav>
 .container {
     max-width: 900px;
     margin: 40px auto;
