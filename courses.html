@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>كورساتي المسجلة</title>
+    <title>جدول الكورسات</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -20,42 +20,48 @@
 
     <main>
         <div class="table-container">
-            <h2>قائمة الكورسات المسجلة</h2>
-            <table border="1">
+            <h2>كورساتي المسجلة</h2>
+            <table border="1" style="width:100%; border-collapse: collapse;">
                 <thead>
-                    <tr>
-                        <th>اسم الكورس</th>
+                    <tr style="background: #2c3e50; color: white;">
+                        <th>الكورس</th>
                         <th>الساعات</th>
                         <th>المحاضر</th>
                         <th>ملاحظات</th>
                     </tr>
                 </thead>
-                <tbody id="tableBody"></tbody>
+                <tbody id="tableBody">
+                    </tbody>
             </table>
-            <button onclick="localStorage.removeItem('myCourses'); location.reload();" style="margin-top: 20px; background: #e74c3c; width: auto; padding: 10px;">مسح كل البيانات</button>
         </div>
     </main>
 
     <script>
-        window.onload = function() {
+        function loadData() {
             const tableBody = document.getElementById('tableBody');
-            const data = JSON.parse(localStorage.getItem('myCourses') || '[]');
+            // بنجيب البيانات وبنتأكد إنها موجودة فعلاً
+            const rawData = localStorage.getItem('myCourses');
+            const courses = JSON.parse(rawData || '[]');
 
-            if(data.length === 0) {
-                tableBody.innerHTML = '<tr><td colspan="4">لا توجد كورسات مضافة</td></tr>';
+            tableBody.innerHTML = ''; 
+
+            if (courses.length === 0) {
+                tableBody.innerHTML = '<tr><td colspan="4" style="padding:20px;">مفيش بيانات لسه.. ضيف كورس من صفحة الإضافة</td></tr>';
             } else {
-                let html = '';
-                data.forEach(item => {
-                    html += <tr>
-                        <td>${item.name}</td>
-                        <td>${item.hours}</td>
-                        <td>${item.instructor || '-'}</td>
-                        <td>${item.notes || '-'}</td>
+                courses.forEach(course => {
+                    const row = <tr>
+                        <td>${course.name}</td>
+                        <td>${course.hours}</td>
+                        <td>${course.instructor || '-'}</td>
+                        <td>${course.notes || '-'}</td>
                     </tr>;
+                    tableBody.innerHTML += row;
                 });
-                tableBody.innerHTML = html;
             }
-        };
+        }
+
+        // تشغيل الكود بمجرد ما الصفحة تفتح
+        window.onload = loadData;
     </script>
 </body>
 </html>
