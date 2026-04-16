@@ -1,62 +1,25 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar">
 <head>
     <meta charset="UTF-8">
-    <title>إضافة كورس</title>
     <link rel="stylesheet" href="style.css">
+    <title>إضافة كورس</title>
 </head>
 <body>
     <header>
-        <div class="logo">course<span>organizer</span></div>
-        <nav>
-            <ul>
-                <li><a href="index.html">الرئيسية</a></li>
-                <li><a href="courses.html">كورساتي</a></li>
-                <li><a href="add-course.html">إضافة كورس</a></li>
-            </ul>
-        </nav>
+        <div class="logo">Course<span>Organizer</span></div>
+        <nav><a href="index.html">الرئيسية</a> <a href="courses.html">الجدول</a></nav>
     </header>
 
-    <main>
-        <form id="courseForm">
-            <h2>إضافة كورس جديد</h2>
-            <input type="text" id="name" placeholder="اسم الكورس" required>
-            <input type="number" id="hours" placeholder="الساعات" required>
-            <input type="text" id="inst" placeholder="المحاضر">
-            <textarea id="notes" placeholder="الملاحظات"></textarea>
-            <button type="button" onclick="saveData()">حفظ الكورس</button>
-        </form>
-    </main>
-
-    <script>
-        function saveData() {
-            const n = document.getElementById('name').value;
-            const h = document.getElementById('hours').value;
-            const i = document.getElementById('inst').value;
-            const o = document.getElementById('notes').value;
-
-            if(!n || !h) {
-                alert("اكتب الاسم والساعات");
-                return;
-            }
-
-            // سحب البيانات القديمة بصيغة صحيحة
-            let data = [];
-            try {
-                data = JSON.parse(localStorage.getItem('myCourses')) || [];
-            } catch(e) {
-                data = [];
-            }
-
-            // إضافة الكورس الجديد
-            data.push({ name: n, hours: h, instructor: i, notes: o });
-            
-            // الحفظ
-            localStorage.setItem('myCourses', JSON.stringify(data));
-
-            // التحويل للجدول
-            window.location.href = 'courses.html';
-        }
-    </script>
+    <div class="container">
+        <h2>نموذج إضافة كورس</h2>
+        <div class="form-box">
+            <p style="margin-bottom: 15px; color: #666;">(هذا النموذج للعرض فقط، البيانات الثابتة موجودة في الجدول)</p>
+            <input type="text" placeholder="اسم الكورس" style="width: 80%; padding: 10px; margin: 10px 0; border: 1px solid #ddd; border-radius: 5px;">
+            <input type="number" placeholder="عدد الساعات" style="width: 80%; padding: 10px; margin: 10px 0; border: 1px solid #ddd; border-radius: 5px;">
+            <br>
+            <button style="padding: 10px 30px; background: #3498db; color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold;">إرسال طلب</button>
+        </div>
+    </div>
 </body>
 </html>

@@ -1,56 +1,61 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar">
 <head>
     <meta charset="UTF-8">
-    <title>جدول الكورسات</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
+    <title>جدول الكورسات</title>
 </head>
 <body>
-    <header>
-        <div class="logo">course<span>organizer</span></div>
-    </header>
 
-    <main>
-        <h2>كورساتي</h2>
-        <table border="1" style="width:100%; text-align:center;">
-            <thead>
-                <tr>
-                    <th>الكورس</th>
-                    <th>الساعات</th>
-                    <th>المحاضر</th>
-                    <th>ملاحظات</th>
-                </tr>
-            </thead>
-            <tbody id="tableBody"></tbody>
-        </table>
-    </main>
+<header>
+    <div class="logo">Course<span>Organizer</span></div>
+    <nav>
+        <a href="index.html">الرئيسية</a>
+        <a href="add-course.html">إضافة كورس (شكل)</a>
+    </nav>
+</header>
 
-    <script>
-        window.onload = function() {
-            const body = document.getElementById('tableBody');
-            let courses = [];
-            
-            try {
-                courses = JSON.parse(localStorage.getItem('myCourses')) || [];
-            } catch(e) {
-                courses = [];
-            }
+<div class="container">
+    <h2>جدول الكورسات الثابتة</h2>
+    
+    <table>
+        <thead>
+            <tr>
+                <th>اسم الكورس</th>
+                <th>عدد الساعات</th>
+                <th>المحاضر</th>
+                <th>الحالة</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>أساسيات البرمجة HTML/CSS</td>
+                <td>25 ساعة</td>
+                <td>زياد محمد</td>
+                <td style="color: green; font-weight: bold;">متاح</td>
+            </tr>
+            <tr>
+                <td>تطوير المواقع JavaScript</td>
+                <td>40 ساعة</td>
+                <td>أحمد علي</td>
+                <td style="color: green; font-weight: bold;">متاح</td>
+            </tr>
+            <tr>
+                <td>تصميم الجرافيك Photoshop</td>
+                <td>20 ساعة</td>
+                <td>سارة كمال</td>
+                <td style="color: orange; font-weight: bold;">قريباً</td>
+            </tr>
+            <tr>
+                <td>التسويق الإلكتروني</td>
+                <td>15 ساعة</td>
+                <td>محمد إبراهيم</td>
+                <td style="color: green; font-weight: bold;">متاح</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
 
-            if(courses.length === 0) {
-                body.innerHTML = '<tr><td colspan="4">لا توجد بيانات</td></tr>';
-            } else {
-                let rows = '';
-                courses.forEach(function(item) {
-                    rows += '<tr>' +
-                        '<td>' + item.name + '</td>' +
-                        '<td>' + item.hours + '</td>' +
-                        '<td>' + (item.instructor || '-') + '</td>' +
-                        '<td>' + (item.notes || '-') + '</td>' +
-                    '</tr>';
-                });
-                body.innerHTML = rows;
-            }
-        };
-    </script>
 </body>
 </html>
