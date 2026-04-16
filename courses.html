@@ -1,49 +1,44 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar">
 <head>
     <meta charset="UTF-8">
-    <title>كورساتي</title>
     <link rel="stylesheet" href="style.css">
+    <title>جدول الكورسات</title>
 </head>
 <body>
-    <header style="background:#2c3e50; padding:20px; display:flex; justify-content:space-between; color:white;">
-        <div>course<span>organizer</span></div>
+    <header>
+        <div>Course Organizer</div>
         <nav>
-            <a href="index.html" style="color:white; margin-left:15px; text-decoration:none;">الرئيسية</a>
-            <a href="add-course.html" style="color:white; text-decoration:none;">إضافة كورس</a>
+            <a href="index.html">الرئيسية</a>
+            <a href="add-course.html">إضافة كورس</a>
         </nav>
     </header>
-
-    <main style="padding:20px; text-align:center;">
-        <h2>الجدول</h2>
-        <table border="1" style="width:100%; margin-top:20px; border-collapse:collapse;">
+    <div class="container">
+        <h2>الكورسات المسجلة</h2>
+        <table>
             <thead>
-                <tr style="background:#eee;">
-                    <th>الاسم</th>
+                <tr>
+                    <th>الكورس</th>
                     <th>الساعات</th>
                     <th>المحاضر</th>
-                    <th>ملاحظات</th>
                 </tr>
             </thead>
             <tbody id="tableBody"></tbody>
         </table>
-    </main>
+        <br>
+        <button onclick="localStorage.clear(); location.reload();" style="background:#c0392b">مسح كل البيانات</button>
+    </div>
 
     <script>
         window.onload = function() {
-            const body = document.getElementById('tableBody');
-            const data = JSON.parse(localStorage.getItem('myCourses') || '[]');
+            const tableBody = document.getElementById('tableBody');
+            const data = JSON.parse(localStorage.getItem('coursesData') || '[]');
             
             if(data.length === 0) {
-                body.innerHTML = '<tr><td colspan="4">مفيش داتا.. روح لصفحة "إضافة كورس" وضيف واحد جديد</td></tr>';
+                tableBody.innerHTML = '<tr><td colspan="3">لا توجد كورسات.. ضيف كورس الأول</td></tr>';
             } else {
                 data.forEach(item => {
-                    body.innerHTML += <tr>
-                        <td>${item.name}</td>
-                        <td>${item.hours}</td>
-                        <td>${item.instructor || '-'}</td>
-                        <td>${item.notes || '-'}</td>
-                    </tr>;
+                    tableBody.innerHTML += <tr><td>${item.name}</td><td>${item.hours}</td><td>${item.inst}</td></tr>;
                 });
             }
         };
