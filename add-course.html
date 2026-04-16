@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إضافة كورس جديد</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div class="logo">course<span>organizer</span></div>
+        <nav>
+            <ul>
+                <li><a href="index.html">الرئيسية</a></li>
+                <li><a href="courses.html">جدول الكورسات</a></li>
+                <li><a href="add-course.html">إضافة كورس</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div class="form-container">
+            <h2>إضافة كورس جديد</h2>
+            <form id="courseForm">
+                <input type="text" id="cName" placeholder="اسم الكورس" required>
+                <input type="number" id="cHours" placeholder="عدد الساعات" required>
+                <input type="text" id="cInst" placeholder="اسم المحاضر">
+                <textarea id="cNote" placeholder="ملاحظات إضافية"></textarea>
+                <button type="button" onclick="saveData()">حفظ البيانات</button>
+            </form>
+        </div>
+    </main>
+
+    <script>
+        function saveData() {
+            const name = document.getElementById('cName').value;
+            const hours = document.getElementById('cHours').value;
+            const inst = document.getElementById('cInst').value;
+            const note = document.getElementById('cNote').value;
+
+            if(!name || !hours) {
+                alert("برجاء إدخال اسم الكورس وعدد الساعات");
+                return;
+            }
+
+            const courses = JSON.parse(localStorage.getItem('myCourses') || '[]');
+            courses.push({ name, hours, instructor: inst, notes: note });
+            localStorage.setItem('myCourses', JSON.stringify(courses));
+
+            window.location.href = 'courses.html';
+        }
+    </script>
+</body>
+</html>

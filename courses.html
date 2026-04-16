@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>كورساتي المسجلة</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div class="logo">course<span>organizer</span></div>
+        <nav>
+            <ul>
+                <li><a href="index.html">الرئيسية</a></li>
+                <li><a href="courses.html">جدول الكورسات</a></li>
+                <li><a href="add-course.html">إضافة كورس</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div class="table-container">
+            <h2>قائمة الكورسات المسجلة</h2>
+            <table border="1">
+                <thead>
+                    <tr>
+                        <th>اسم الكورس</th>
+                        <th>الساعات</th>
+                        <th>المحاضر</th>
+                        <th>ملاحظات</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody"></tbody>
+            </table>
+            <button onclick="localStorage.removeItem('myCourses'); location.reload();" style="margin-top: 20px; background: #e74c3c; width: auto; padding: 10px;">مسح كل البيانات</button>
+        </div>
+    </main>
+
+    <script>
+        window.onload = function() {
+            const tableBody = document.getElementById('tableBody');
+            const data = JSON.parse(localStorage.getItem('myCourses') || '[]');
+
+            if(data.length === 0) {
+                tableBody.innerHTML = '<tr><td colspan="4">لا توجد كورسات مضافة</td></tr>';
+            } else {
+                let html = '';
+                data.forEach(item => {
+                    html += <tr>
+                        <td>${item.name}</td>
+                        <td>${item.hours}</td>
+                        <td>${item.instructor || '-'}</td>
+                        <td>${item.notes || '-'}</td>
+                    </tr>;
+                });
+                tableBody.innerHTML = html;
+            }
+        };
+    </script>
+</body>
+</html>
